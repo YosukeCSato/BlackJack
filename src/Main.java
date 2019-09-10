@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -58,19 +59,43 @@ public class Main {
 		System.out.println("ディーラーの2枚めのカードは秘密です。");
 
 		//プレイヤー・ディーラーのポイントを集計
-
+		int playerPoint = sumPoint(player);
 		System.out.println("あなたの現在のポイントは" + playerPoint + "です。");
 
 		//プレイヤーがカードを引くフェーズ
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("カードを引きますか？");
+		System.out.println("1:はい 2:いいえ");
+		int select = scanner.nextInt();
+		for (; select == 1;) {
+			player.add(deck.get(0));
+			deck.remove(0);
+			System.out.println(sumPoint(player));
+			System.out.println("カードを引きますか？");
+			System.out.println("1:はい 2:いいえ");
+			select = scanner.nextInt();
+		}
+		playerPoint = sumPoint(player);
 
 		//ディーラーがげ札を17以上にするまでカードを引くフェーズ
+		int dealerPoint = sumPoint(dealer);
+		while (dealerPoint < 17) {
+			dealer.add(deck.get(0));
+			deck.remove(0);
+			dealerPoint = sumPoint(dealer);
+		}
 
 		//ポイントを比較する
-		System.out.println("あなたのポイントは" + "playerPoint");
+		System.out.println("あなたのポイントは" + playerPoint);
 		System.out.println("ディーラーのポイントは" + dealerPoint);
 
-
-
+		if (playerPoint == dealerPoint || (isBusted(playerPoint) && isBusted(dealerPoint))) {
+			System.out.println("引き分けです。");
+		} else if (playerPoint > dealerPoint && (!isBusted(playerPoint) && isBusted(dealerPoint)) || isBusted(dealerPoint)) {
+			System.out.println("勝ちました！");
+		} else {
+			System.out.println("負けました・・・");
+		}
 
 	}
 
@@ -97,6 +122,70 @@ public class Main {
 			return true;
 		}
 		return false;
+	}
+
+	//現在の合計ポイントを計算するメソッド
+	private static int sumPoint(List<Integer> list) {
+		int sumPoint = 0;
+		for (int i : list) {
+			sumPoint += toPoint(toNumber(i));
+		}
+		return sumPoint;
+
+	}
+
+	//山札の通し番号を得点計算用のポイントに変換するメソッド。J/Q/Kは10とする
+	private static int toPoint(int num) {
+		if (num >= 11) {
+			return 10;
+		} else {
+			return num;
+		}
+
+	}
+
+	//山札の数を（スート）の（ランク）の文字列に置き換えるメソッド
+	private static String toDesc(int cardNumber) {
+		String rank = toRank(toNumber(cardNumber));
+		if (cardNumber >= 40) {
+			return "ハートの" + rank;
+		} else if (cardNumber >= 27) {
+			return "ダイヤの" + rank;
+		} else if (cardNumber >= 14) {
+			return "スペードの" + rank;
+		} else {
+			return "クローバーの" + rank;
+		}
+
+	}
+
+	//山札の数をカードの数に置き換えるメソッド
+	private static int toNumber(int cardNumber) {
+		if (cardNumber >= 40) {
+			return cardNumber - 39;
+		} else if (cardNumber >= 27) {
+			return cardNumber - 26;
+		} else if (cardNumber >= 14) {
+			return cardNumber - 13;
+		} else {
+			return cardNumber;
+		}
+	}
+
+	//カード番号をランク（AやJ,Q,K）に変換するメソッド
+	private static String toRank(int number) {
+		switch (number) {
+		case 13:
+			return "King";
+		case 12:
+			return "Queen";
+		case 11:
+			return "Jack";
+		case 1:
+			return "Ace";
+		default:
+			return String.valueOf(number);
+		}
 	}
 
 }
