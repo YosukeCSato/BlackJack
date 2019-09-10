@@ -29,24 +29,18 @@ public class Main {
 		//空の山札を作成
 		List<Integer> deck = new ArrayList<Integer>();
 
-		for (int i = 1; i < 53; i++) {
-			deck.add(i);
-		}
-
-
-
 		//山札をシャッフル
-		Collections.shuffle(deck);
+		shuffleDeck(deck);
 
 		//プレイヤー・ディーラーの手札リストを作成
-		List<Integer> playerList = new ArrayList<Integer>();
-		List<Integer> dealerList = new ArrayList<Integer>();
+		List<Integer> player = new ArrayList<Integer>();
+		List<Integer> dealer = new ArrayList<Integer>();
 
 		//プレイヤー・ディーラーがカードを2枚引く
 		for (int i = 0; i < 2; i++) {
-			playerList.add(deck.get(0));
+			player.add(deck.get(0));
 			deck.remove(0);
-			dealerList.add(deck.get(0));
+			dealer.add(deck.get(0));
 			deck.remove(0);
 		}
 
@@ -54,11 +48,55 @@ public class Main {
 		//何枚引いたか？
 		int deckCount = 52 - deck.size();
 
-		//？？？？
+		//プレイヤーの手札枚数を記録する変数playerHandsを定義
+		int playerHands = player.size();
+
+		//プレイヤー・ディーラーの手札のポイントを表示
+		System.out.println("あなたの1枚目のカードは" + toDesc(player.get(0)));
+		System.out.println("ディーラーの1枚目のカードは" + toDesc(dealer.get(0)));
+		System.out.println("あなたの2枚目のカードは" + toDesc(player.get(1)));
+		System.out.println("ディーラーの2枚めのカードは秘密です。");
+
+		//プレイヤー・ディーラーのポイントを集計
+
+		System.out.println("あなたの現在のポイントは" + playerPoint + "です。");
+
+		//プレイヤーがカードを引くフェーズ
+
+		//ディーラーがげ札を17以上にするまでカードを引くフェーズ
+
+		//ポイントを比較する
+		System.out.println("あなたのポイントは" + "playerPoint");
+		System.out.println("ディーラーのポイントは" + dealerPoint);
 
 
 
 
+	}
+
+	//山札（deck）に値を入れ、シャッフルするメソッド
+	private static void shuffleDeck(List<Integer> deck) {
+
+		//リストに1-52の連番を代入
+		for (int i = 1; i < 53; i++) {
+			deck.add(i);
+		}
+
+		//山札をシャッフル
+		Collections.shuffle(deck);
+
+		//リストの中身を確認（デバッグ用）
+		for (int i : deck) {
+			System.out.println(deck.indexOf(i) + " : " + i);
+		}
+	}
+
+	//手札がバーストしているか判定するメソッド
+	private static boolean isBusted(int point) {
+		if (point >= 21) {
+			return true;
+		}
+		return false;
 	}
 
 }
