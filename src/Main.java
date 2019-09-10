@@ -51,8 +51,10 @@ public class Main {
 		}
 
 		//山札の進行状況を記録する変数deckCountを定義
-		//残りの枚数を表示？
+		//何枚引いたか？
 		int deckCount = 52 - deck.size();
+
+		//
 
 
 
