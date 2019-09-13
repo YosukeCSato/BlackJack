@@ -38,6 +38,10 @@ public class Main extends Application {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("application/Form.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			scene.getStylesheets().add(getClass().getResource("application/application.css").toExternalForm());
+
+			// タイトルセット
+			primaryStage.setTitle("ブラックジャック");
+
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
