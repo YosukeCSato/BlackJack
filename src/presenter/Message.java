@@ -1,10 +1,14 @@
 package presenter;
 
+import java.util.Scanner;
+
+import deck.Deck;
 import gamer.Gamer;
 
 public class Message {
 
 	private static Message msg = new Message();
+	private Scanner scanner = new Scanner(System.in);
 	private CardOrganizer organizer = CardOrganizer.getInstance();
 
 	private Message() {
@@ -14,8 +18,8 @@ public class Message {
 		return msg;
 	}
 
-	public void showStartGameMsg() {
-		System.out.println("ゲームを開始します");
+	public String showStartGameMsg() {
+		return "ゲームを開始します";
 	}
 
 	public void showCardMsg(Gamer gamer, int number) {
@@ -30,5 +34,22 @@ public class Message {
 	public void showPointMsg(Gamer gamer) {
 		System.out.println(gamer.getName() + "の現在のポイントは" + gamer.getPoint() + "です。");
 	}
+
+	public void showAskTakeACardMsg(Gamer gamer, Deck deck) {
+		System.out.println("カードを引きますか？");
+		System.out.println("1:はい 2:いいえ");
+		int i = this.scanner.nextInt();
+		while (true) {
+			switch (i) {
+			case 1:
+				gamer.takeACard(deck);
+			case 2:
+				break;
+			default:
+				System.out.println("正しい数字を入力してください");
+			}
+		}
+	}
+
 
 }

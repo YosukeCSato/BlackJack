@@ -3,11 +3,16 @@ import java.util.Scanner;
 import deck.Deck;
 import gamer.Dealer;
 import gamer.Player;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import presenter.Judger;
 import presenter.Message;
 import presenter.ScoreMarker;
 
-public class Main {
+public class Main extends Application {
 
 	/*カード枚数は52枚。ジョーカーは含めない。カードの重複が無いように山札を構築する。
 	プレイヤー、ディーラーの一対一で対戦するものとし、以下の挙動を取る
@@ -27,9 +32,22 @@ public class Main {
 
 	ダブルダウン・スプリット・サレンダーなどの特殊ルールは無し。*/
 
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("application/Form.fxml"));
+			Scene scene = new Scene(root, 400, 400);
+			scene.getStylesheets().add(getClass().getResource("application/application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 
-		System.out.println("ゲームを開始します。");
+		launch(args);
 
 		//空の山札を作成
 		//山札をシャッフル
@@ -57,7 +75,7 @@ public class Main {
 		//int deckCount = 52 - deck.getDeck().size();
 
 		//プレイヤーの手札枚数を記録する変数playerHandsを定義
-		int playerHands = player.getList().size();
+		//int playerHands = player.getList().size();
 
 		//プレイヤー・ディーラーの手札のポイントを表示
 		msg.showCardMsg(player, 1);
@@ -93,7 +111,5 @@ public class Main {
 		}
 
 		judger.judge(player, dealer);
-
 	}
-
 }
