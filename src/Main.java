@@ -3,16 +3,11 @@ import java.util.Scanner;
 import deck.Deck;
 import gamer.Dealer;
 import gamer.Player;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import presenter.Judger;
 import presenter.Message;
 import presenter.ScoreMarker;
 
-public class Main extends Application {
+public class Main {
 
 	/*カード枚数は52枚。ジョーカーは含めない。カードの重複が無いように山札を構築する。
 	プレイヤー、ディーラーの一対一で対戦するものとし、以下の挙動を取る
@@ -32,44 +27,7 @@ public class Main extends Application {
 
 	ダブルダウン・スプリット・サレンダーなどの特殊ルールは無し。*/
 
-	@Override
-	public void init() throws Exception {
-		showThreadInfo("init");
-	}
-
-	@Override
-	public void stop() throws Exception {
-		showThreadInfo("init");
-	}
-
-	private static void showThreadInfo(String label) {
-		Thread t = Thread.currentThread();
-		String s = label + ":[" + t.getId() + "] " + t.getName();
-		System.out.println(s);
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-		showThreadInfo("start");
-		try {
-			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("application/Form.fxml"));
-			Scene scene = new Scene(root, 400, 400);
-			scene.getStylesheets().add(getClass().getResource("application/application.css").toExternalForm());
-
-			// タイトルセット
-			primaryStage.setTitle("ブラックジャック");
-
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void main(String[] args) {
-		showThreadInfo("main");
-
-		launch(args);
 
 		/*空の山札を作成
 		山札をシャッフル
