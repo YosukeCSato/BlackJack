@@ -33,7 +33,24 @@ public class Main extends Application {
 	ダブルダウン・スプリット・サレンダーなどの特殊ルールは無し。*/
 
 	@Override
+	public void init() throws Exception {
+		showThreadInfo("init");
+	}
+
+	@Override
+	public void stop() throws Exception {
+		showThreadInfo("init");
+	}
+
+	private static void showThreadInfo(String label) {
+		Thread t = Thread.currentThread();
+		String s = label + ":[" + t.getId() + "] " + t.getName();
+		System.out.println(s);
+	}
+
+	@Override
 	public void start(Stage primaryStage) {
+		showThreadInfo("start");
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("application/Form.fxml"));
 			Scene scene = new Scene(root, 400, 400);
@@ -50,12 +67,13 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		showThreadInfo("main");
 
 		launch(args);
 
-		//空の山札を作成
-		//山札をシャッフル
-		//deckをnew時点でコンストラクタでシャッフルをするように実装
+		/*空の山札を作成
+		山札をシャッフル
+		deckをnew時点でコンストラクタでシャッフルをするように実装*/
 		Deck deck = new Deck();
 
 		//プレイヤー・ディーラーを作成
